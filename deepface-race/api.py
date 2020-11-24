@@ -13,8 +13,8 @@ import numpy as np
 # from deepface.basemodels import VGGFace, OpenFace, Facenet, FbDeepFace, DeepID
 # from deepface.basemodels.DlibResNet import DlibResNet
 
-#from src.Race import loadModel
-from src.Emotion import loadModel
+from src.Race import loadModel
+#from src.Emotion import loadModel
 from src.commons.functions import preprocess_face
 
 app = Flask(__name__)
@@ -85,6 +85,7 @@ def predict_race(img, img_type, race_probs = True):
     resp_obj += dominant_race_obj
 
     if race_probs:
+        resp_obj += ","
         resp_obj += race_obj
     
     resp_obj += "}"
