@@ -95,7 +95,7 @@ def predict_race(img, img_type, race_probs = 0):
             resp_obj += "\"%s\": %s" % (race_label, race_prediction)
         resp_obj += "}"
 
-    resp_obj = json.loads(resp_obj)
+        resp_obj = json.loads(resp_obj)
 
     return resp_obj
 
@@ -111,7 +111,7 @@ def predict_age(img, img_type, age_probs = 0):
 
     resp_obj = {str(apparent_age): True}
 
-    resp_obj = json.loads(resp_obj)
+    #resp_obj = json.loads(resp_obj)
 
     return resp_obj
 
