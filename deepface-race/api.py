@@ -116,10 +116,11 @@ def predict_age(img, img_type, age_probs = 0):
     return resp_obj
 
 def predict_emotion(img, img_type, emotion_probs = 0):
-    img_224 = preprocess_face(img = img, img_type = img_type, target_size = (224, 224), grayscale = False, 
-        enforce_detection = True, detector_backend = 'opencv') #just emotion model expects grayscale images
+    img_48 = preprocess_face(img=img, target_size=(48, 48),
+                          grayscale=True, enforce_detection=True, detector_backend='opencv')
+ #just emotion model expects grayscale images
     print("img_224 finish!")
-    emotion_predictions = emotion_model.predict(img_224)[0,:]
+    emotion_predictions = emotion_model.predict(img_48)[0,:]
     print("prediction finish!")
     
     sum_of_predictions = emotion_predictions.sum()

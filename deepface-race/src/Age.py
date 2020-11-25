@@ -45,5 +45,5 @@ def loadModel():
 
 def findApparentAge(age_predictions):
 	output_indexes = np.array([i for i in range(0, 101)])
-	apparent_age = np.sum(age_predictions * output_indexes)
+	apparent_age = np.sum(age_predictions * output_indexes, dtype = np.uint8)
 	return apparent_age
