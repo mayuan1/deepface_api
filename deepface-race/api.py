@@ -60,8 +60,8 @@ def analyze(name):
 
         toc = time.time()
 
-        resp_obj["trx_id"] = trx_id
-        resp_obj["seconds"] = toc-tic
+        # resp_obj["trx_id"] = trx_id
+        # resp_obj["seconds"] = toc-tic
 
         return resp_obj, 200
 
