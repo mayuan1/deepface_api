@@ -140,8 +140,7 @@ def predict_emotion(img, img_type, emotion_probs = 0):
 
             resp_obj += "\"%s\": %s" % (emotion_label, emotion_prediction)
         resp_obj += "}"
-
-    resp_obj = json.loads(resp_obj)
+        resp_obj = json.loads(resp_obj)
 
     return resp_obj
 
