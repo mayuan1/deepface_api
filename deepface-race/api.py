@@ -48,7 +48,7 @@ def analyze(name):
     else:
         return jsonify({'success': False, 'error': 'you must pass an img object in the request'}), 205
     
-    print("Analyzing image...")
+    #print("Analyzing image...")
 
     try:
         if name == "race":
@@ -73,9 +73,9 @@ def analyze(name):
 def predict_race(img, img_type, race_probs = 0):
     img_224 = preprocess_face(img = img, img_type = img_type, target_size = (224, 224), grayscale = False, 
         enforce_detection = True, detector_backend = 'opencv') #just emotion model expects grayscale images
-    print("img_224 finish!")
+    #print("img_224 finish!")
     race_predictions = race_model.predict(img_224)[0,:]
-    print("prediction finish!")
+    #print("prediction finish!")
     
     sum_of_predictions = race_predictions.sum()
 
@@ -103,9 +103,9 @@ def predict_race(img, img_type, race_probs = 0):
 def predict_age(img, img_type, age_probs = 0):
     img_224 = preprocess_face(img = img, img_type = img_type, target_size = (224, 224), grayscale = False, 
         enforce_detection = True, detector_backend = 'opencv') #just emotion model expects grayscale images
-    print("img_224 finish!")
+    #print("img_224 finish!")
     age_predictions = age_model.predict(img_224)[0,:]
-    print("prediction finish!")
+    #print("prediction finish!")
     
     apparent_age = Age.findApparentAge(age_predictions)
 
@@ -119,9 +119,9 @@ def predict_emotion(img, img_type, emotion_probs = 0):
     img_48 = preprocess_face(img=img, img_type = img_type, target_size=(48, 48),
                           grayscale=True, enforce_detection=True, detector_backend='opencv')
  #just emotion model expects grayscale images
-    print("img_48 finish!")
+    #print("img_48 finish!")
     emotion_predictions = emotion_model.predict(img_48)[0,:]
-    print("prediction finish!")
+    #print("prediction finish!")
     
     sum_of_predictions = emotion_predictions.sum()
 
