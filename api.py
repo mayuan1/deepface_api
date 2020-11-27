@@ -34,29 +34,24 @@ emotion_labels = ['angry', 'disgust', 'fear', 'happy', 'sad', 'surprise', 'neutr
 def analyze(name):
 
     tic = time.time()
-    req = request.get_json()
     trx_id = uuid.uuid4()
 
-    resp_obj = jsonify({'success': False})
+    received_img, image_type = decode_Request(request)
 
-    if 'image' in req:
-        base64_img = req['image']
-        if 'image_type' in req:
-            image_type = req['image_type']
-        else:
-            image_type = 'base64'
-    else:
-        return jsonify({'success': False, 'error': 'you must pass an img object in the request'}), 205
+    # resp_obj = jsonify({'success': False})
+
+    if not received_img:
+        return {'error': 'you must pass an img object in the request'}, 205
     
     #print("Analyzing image...")
 
     try:
         if name == "race":
-            resp_obj = predict_race(base64_img, image_type)
+            resp_obj = predict_race(received_img, image_type)
         elif name == "age":
-            resp_obj = predict_age(base64_img, image_type)
+            resp_obj = predict_age(received_img, image_type)
         elif name == "emotion":
-            resp_obj = predict_emotion(base64_img, image_type)
+            resp_obj = predict_emotion(received_img, image_type)
 
         toc = time.time()
 
@@ -69,6 +64,24 @@ def analyze(name):
         print(ex)
         return {'error': str(ex)}, 200
 
+
+def decode_Request(request):
+    if request.content_type == "application/json":
+        req = request.get_json()
+        if 'image' in req:
+            received_img = req['image']
+            if 'image_type' in req:
+                image_type = req['image_type']
+            else:
+                image_type = 'base64'
+        else:
+            return None, None
+    else:
+        req = request.form
+        image_type = req.get('image_type')
+        received_img = req.get('image')
+    
+    return received_img, image_type
 
 def predict_race(img, img_type, race_probs = 0):
     img_224 = preprocess_face(img = img, img_type = img_type, target_size = (224, 224), grayscale = False, 
@@ -150,7 +163,7 @@ if __name__ == '__main__':
 	parser.add_argument(
 		'-p', '--port',
 		type=int,
-		default=5000,
+		default=5431,
 		help='Port of serving api')
 	args = parser.parse_args()
 	app.run(host='0.0.0.0', port=args.port)
